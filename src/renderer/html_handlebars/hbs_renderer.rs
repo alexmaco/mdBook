@@ -678,6 +678,9 @@ fn make_data(
         )
     }
 
+    let code_view = html_config.code_view.clone().unwrap_or_default();
+    data.insert("code_view_enabled".to_owned(), json!(code_view.enable));
+
     if let Some(ref git_repository_url) = html_config.git_repository_url {
         data.insert("git_repository_url".to_owned(), json!(git_repository_url));
     }

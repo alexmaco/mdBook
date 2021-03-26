@@ -412,6 +412,38 @@ function playground_text(playground) {
     });
 })();
 
+(function codeview() {
+    var html = document.querySelector('html');
+    var codeViewToggleButton = document.getElementById('coder-toggle');
+
+    if (!codeViewToggleButton) {
+        return;
+    }
+
+    codeViewToggleButton.addEventListener('click', function toggleCodeView() {
+        let elems = document.querySelector("div.content > main").children;
+        let arr = Array.from(elems);
+
+        if (html.classList.contains('codeview-enabled')) {
+            html.classList.remove('codeview-enabled');
+            arr.forEach(node => node.classList.remove('hidden'));
+        } else {
+            html.classList.add('codeview-enabled');
+            arr.forEach(node => {
+                let name = node.nodeName.toLowerCase();
+                let exempt = name == "pre" || !!name.match(/h[0-9]/);
+                exempt ||= Array
+                    .from(node.getElementsByTagName('span'))
+                    .map((subspan) => subspan.classList)
+                    .some((classes) => classes.contains('filename') || classes.contains('caption'));
+                if (!exempt) {
+                    node.classList.add("hidden");
+                }
+            });
+        }
+    });
+})();
+
 (function sidebar() {
     var html = document.querySelector("html");
     var sidebar = document.getElementById("sidebar");

@@ -506,6 +506,8 @@ pub struct HtmlConfig {
     pub no_section_label: bool,
     /// Search settings. If `None`, the default will be used.
     pub search: Option<Search>,
+    /// Code view settings. If `None`, the default will be used.
+    pub code_view: Option<CodeView>,
     /// Git repository url. If `None`, the git button will not be shown.
     pub git_repository_url: Option<String>,
     /// FontAwesome icon class to use for the Git repository link.
@@ -552,6 +554,7 @@ impl Default for HtmlConfig {
             print: Print::default(),
             no_section_label: false,
             search: None,
+            code_view: None,
             git_repository_url: None,
             git_repository_icon: None,
             input_404: None,
@@ -623,6 +626,20 @@ impl Default for Playground {
             copy_js: true,
             line_numbers: false,
         }
+    }
+}
+
+/// Configuration of the code view functionality of the HTML renderer.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(default, rename_all = "kebab-case")]
+pub struct CodeView {
+    /// Enable the code view feature. Default: `true`.
+    pub enable: bool,
+}
+
+impl Default for CodeView {
+    fn default() -> CodeView {
+        CodeView { enable: false }
     }
 }
 
